@@ -17,6 +17,96 @@ class Covid19PY(object):
     def getDataByCity(self,city):
         return pd.Series(np.cumsum(self.df[self.df.ciudad_de_ubicaci_n==city].sort_values('fecha_reporte_web').groupby(['fecha_reporte_web']).count()['id_de_caso'].values))
 
+    def getDataByStatus(self):
+        if(len(self.df)==0):
+            return pd.Series()
+
+        a = self.df[self.df.estado != 'N/A'].groupby(['estado']).count()['id_de_caso']
+
+        if a.index.contains('leve'):
+            a.loc['Leve'] = a.loc['leve'] + a.loc['Leve']
+            a= a.drop('leve')
+
+        if a.index.contains('LEVE'):
+            a.loc['Leve'] = a.loc['LEVE'] + a.loc['Leve']
+            a = a.drop('LEVE')
+
+        return a
+
+    def getDataByAttention(self):
+        a = self.df[self.df.atenci_n != 'N/A'].groupby(['atenci_n']).count()['id_de_caso']
+
+        if a.index.contains('CASA'):
+            a.loc['Casa'] = a.loc['CASA'] + a.loc['Casa']
+            a= a.drop('CASA')
+
+        if a.index.contains('casa'):
+            a.loc['Casa'] = a.loc['casa'] + a.loc['Casa']
+            a = a.drop('casa')
+
+        return a
+
+    def getDataByGenre(self):
+        a = self.df[(self.df.sexo != 'N/A') & (self.df.sexo.isin(['f','m','F','M']))].groupby(['sexo']).count()['id_de_caso']
+
+        if a.index.contains('f'):
+            a.loc['F'] = a.loc['f'] + a.loc['F']
+            a= a.drop('f')
+
+        if a.index.contains('m'):
+            a.loc['M'] = a.loc['m'] + a.loc['M']
+            a = a.drop('m')
+
+        return a
+
+    def getDataByAge(self):
+        a = self.df
+
+        def strToInt(s):
+            if(str(s).isnumeric()):
+                return int(s)
+            return -1
+
+        a.edad = a.edad.map(lambda x: strToInt(x))
+
+        out = {}
+        columns = []
+        index = []
+
+        segments = [(x,x+10) for x in range(0,100,10)]
+        for x1,x2 in segments:
+            col = str(x1)+'-'+str(x2)
+            rows = a[(a.edad >= x1) & (a.edad < x2)].groupby(['edad']).count()['id_de_caso']
+            out[col] = sum(rows.values.tolist())
+            columns.append(col)
+            index.append(rows.index.tolist())
+
+        return pd.Series(out)
+
+    def plotStatus(self):
+        if self.getDataByStatus().empty:
+            return 'empty'
+        self.getDataByStatus().plot.bar()
+        plt.show()
+
+    def plotAttention(self):
+        if self.getDataByAttention().empty:
+            return 'empty'
+        self.getDataByAttention().plot.bar()
+        plt.show()
+
+    def plotGenre(self):
+        if self.getDataByGenre().empty:
+            return 'empty'
+        self.getDataByGenre().plot.bar()
+        plt.show()
+
+    def plotAge(self):
+        if self.getDataByAge().empty:
+            return 'empty'
+        self.getDataByAge().plot.bar()
+        plt.show()
+
 
 #MD: Multiple Days
 class Covid19PYMD(Covid19PY):
