@@ -1,12 +1,12 @@
 import pandas as pd
 import datetime
 import requests
-import covid19py
+import covid19pycolombia as covid19py
 
 class Covid19Builder:
     def __init__(self):
         self.url="https://www.datos.gov.co/resource/gt2j-8ykr.json"
-        
+
     #Deprecated replaced by buildByDate functions
     def buildDailyDF(self,limit=10000):
         today = datetime.date.today().strftime("%Y-%m-%dT00:00:00.000")
