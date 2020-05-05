@@ -1,8 +1,7 @@
 # Covid19PY
 
 Covid19PY is a library to show statistics and charts of COVID-19 cases.
-covid19pycolombia is a module to plot data about reported cases and deaths in Colombia,
-covid19pyworld is a module to plot data about reported cases and deaths by Country.
+Covid19pycolombia is a module to plot data about reported cases and deaths in Colombia and Covid19pyworld is a module to plot data about reported cases and deaths by Country.
 
 Source data
 World Cases: https://github.com/CSSEGISandData/COVID-19.git (Johns Hopkins Coronavirus Resource Center: Home)
