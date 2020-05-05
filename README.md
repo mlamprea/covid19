@@ -3,7 +3,7 @@
 Covid19PY is a library to show statistics and charts of COVID-19 cases.
 Covid19pycolombia is a module to plot data about reported cases and deaths in Colombia and Covid19pyworld is a module to plot data about reported cases and deaths by Country.
 
-Source data
+Source data  
 World Cases: https://github.com/CSSEGISandData/COVID-19.git (Johns Hopkins Coronavirus Resource Center: Home)
 Colombia Cases: https://www.datos.gov.co/resource/gt2j-8ykr.json (https://www.ins.gov.co/Paginas/Inicio.aspx)
 
@@ -15,14 +15,14 @@ These instructions will get you a copy of the project up and running on your loc
 
 - The covid19pyworld module is commad line tool. See usage:
 
-Usage: python covid19pyworld.py [options] country
+Usage: python covid19pyworld.py [options] country  
 
-Options:
-  --version        show program's version number and exit
-  -h, --help       show this help message and exit
-  -c, --confirmed  Build report from Covid 19 confirmed cases
-  -r, --recovered  Build report from Covid 19 recovered cases
-  -d, --deaths     Build report from Covid 19 reported deaths
+Options:  
+  --version        show program's version number and exit  
+  -h, --help       show this help message and exit  
+  -c, --confirmed  Build report from Covid 19 confirmed cases 
+  -r, --recovered  Build report from Covid 19 recovered cases  
+  -d, --deaths     Build report from Covid 19 reported deaths  
 
 
 ### Prerequisites
