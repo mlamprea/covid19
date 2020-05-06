@@ -13,7 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 - The [Covid19Colombia.ipynb](Covid19Colombia.ipynb) notebook provides examples using the covid19pycolombia module.
 
-- The covid19pyworld module is commad line tool. See usage:
+- The covid19pyworld module is a commad line tool. See usage:
 
 Usage: python covid19pyworld.py [options] country  
 
