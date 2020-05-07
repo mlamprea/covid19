@@ -109,6 +109,7 @@ def plotModel(nDays,values,a,b,c):
 
 
 def getDelta(v,n):
+    n = n-1
     deltas = []
     def getDeltaAux(v,n,deltas):
         if(n==0):
@@ -120,6 +121,9 @@ def getDelta(v,n):
 
     deltas = getDeltaAux(v,n,deltas)
     deltas.append(v[0])
+    def to_abs(x):
+        return abs(x)
+    deltas = list(map(to_abs,deltas))
     return list(reversed(deltas))
 
 
@@ -128,7 +132,7 @@ def getDelta(v,n):
 
 def plotBar(nDays,values,title):
 
-    deltas = getDelta(values,len(values)-1)
+    deltas = getDelta(values,len(values))
 
     plt.title(title)
     plt.xlabel("#days")
@@ -170,6 +174,30 @@ def plotLine(nDays,values,title):
     """
 
 
+def init(report,country):
+    url = "data/time_series_covid19_"+report+"_global.csv"
+    print("Processing file "+url)
+    nDays, values = getData(url,country)
+    return (nDays, values)
+
+def plotReportedCasesBar(report, country):
+    nDays, values = init(report,country)
+    title = " variation " + report +" - "+country
+    plotBar(nDays,values,title)
+
+def plotReportedCasesLine(report, country):
+    nDays, values = init(report,country)
+    title =  report +" - "+country
+    plotLine(nDays,values,title)
+
+def plotBarAndLine(report,country):
+    nDays, values = init(report,country)
+    title = " variation " + report +" - "+country
+    plotBar(nDays,values,title)
+    title =  report +" - "+country
+    plotLine(nDays, values,title)
+
+
 def main():
     import sys
     from optparse import OptionParser
@@ -198,15 +226,7 @@ def main():
         if options.deaths:
             report = 'deaths'
 
-        url = "data/time_series_covid19_"+report+"_global.csv"
-
-        print("Processing file "+url)
-
-        nDays, values = getData(url,country)
-        title = " variation " + report +" - "+country
-        plotBar(nDays,values,title)
-        title =  report +" - "+country
-        plotLine(nDays, values,title)
+        plotBarAndLine(report,country)
 
     except Exception as e:
         print('error: '+str(e))

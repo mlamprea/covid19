@@ -112,12 +112,19 @@ class Covid19PYColombia(object):
 class Covid19PYMD(Covid19PYColombia):
 
 #Curve: all confirmed cases in Colombia
-    def getAllData(self):
+    def getAllData_Agg(self):
         return pd.Series(np.cumsum(self.df.sort_values('fecha_reporte_web').groupby(['fecha_reporte_web']).count()['id_de_caso'].values))
 
+    def getAllData(self):
+        return pd.Series((self.df.sort_values('fecha_reporte_web').groupby(['fecha_reporte_web']).count()['id_de_caso'].values))
+
     def plotAll(self):
-        plt.plot(self.getAllData(),label="General")
+        plt.plot(self.getAllData_Agg(),label="General")
         plt.legend()
+        plt.show()
+
+    def plotAll_Bar(self):
+        plt.bar(self.getAllData().index,self.getAllData().values)
         plt.show()
 
     def plotByDept(self,depts):
