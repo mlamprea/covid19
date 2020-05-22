@@ -12,6 +12,7 @@ Colombia Cases: https://www.datos.gov.co/resource/gt2j-8ykr.json (https://www.in
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 - The [Covid19Colombia.ipynb](Covid19Colombia.ipynb) notebook provides examples using the covid19pycolombia module.
+- The [Covid19World.ipynb](Covid19World.ipynb) notebook provides examples using the covid19pyworld module
 
 - The covid19pyworld module is a commad line tool. See usage:
 
