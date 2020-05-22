@@ -2,7 +2,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
 import pandas as pd
 import matplotlib.pyplot as plt
 from dateutil.parser import parse
@@ -31,17 +30,12 @@ def getData(url,country):
     pos_first_day = get_pos_first_day(values) #TODO
     nDays = list(map(date_to_nDays,dates))
 
-    print('last date => ',dates[len(dates)-1])
-
-
-
-
     # from first day with cases confirmed
     nDays = nDays[pos_first_day:]
     # model is overwritten cause it seems to fit better from 0 to N
     nDays = [x for x in range(len(nDays))]
     values = values[pos_first_day:]
-    return (nDays,values)
+    return (dates, nDays,values)
 
 
 def applyModel(nDays,values):
@@ -155,7 +149,6 @@ def plotBar(nDays,values,title):
 
 
 def plotLine(nDays,values,title):
-
     plt.title(title)
     plt.xlabel("#days")
     plt.ylabel("Cases")
@@ -173,26 +166,40 @@ def plotLine(nDays,values,title):
     plt.show()
     """
 
+def plotMultiLine(report, countries):
+    plt.title(report)
+    plt.xlabel("#days")
+    plt.ylabel("Cases")
+    for country in countries:
+        dates,nDays, values = init(report,country,sprint=False)
+        plt.plot(nDays,values,label=country)
+    plt.legend()
+    plt.show()
 
-def init(report,country):
+
+def init(report,country,sprint=True):
     url = "data/time_series_covid19_"+report+"_global.csv"
-    print("Processing file "+url)
-    nDays, values = getData(url,country)
-    return (nDays, values)
+    if(sprint):
+        print("Processing file "+url)
+    dates,nDays, values = getData(url,country)
+    return (dates,nDays, values)
 
 def plotReportedCasesBar(report, country):
-    nDays, values = init(report,country)
+    dates, nDays, values = init(report,country)
     title = " variation " + report +" - "+country
+    print('last date => ',dates[len(dates)-1])
     plotBar(nDays,values,title)
 
 def plotReportedCasesLine(report, country):
-    nDays, values = init(report,country)
+    dates, nDays, values = init(report,country)
     title =  report +" - "+country
+    print('last date => ',dates[len(dates)-1])
     plotLine(nDays,values,title)
 
 def plotBarAndLine(report,country):
-    nDays, values = init(report,country)
+    dates, nDays, values = init(report,country)
     title = " variation " + report +" - "+country
+    print('last date => ',dates[len(dates)-1])
     plotBar(nDays,values,title)
     title =  report +" - "+country
     plotLine(nDays, values,title)
